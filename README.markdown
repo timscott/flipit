@@ -49,9 +49,10 @@ To flip the feature on, change the value to `true`.  When you're sure you never 
 
 ### IoC
 
-Notice that `PlaceWhereMyFeatureIsImplemented` has a dependency on `IFeatureSettingsProvider`.  You can create that yourself, but we like to use an IoC container. For example with StructureMap.
+Notice that `PlaceWhereMyFeatureIsImplemented` depends on `IFeatureFlipper`.  Of course you can fulfil dependencies yourself, but we perfer to use an IoC container. For example with StructureMap.
 
-	x.For<IFeatureSettingsProvider>.Use<AppSettingsFeatureSettingsProvider>();
+	factory.For<IFeatureFlipper>().Use<FeatureFlipper>();
+	factory.For<IFeatureSettingsProvider>().Use<AppSettingsFeatureSettingsProvider>();
 
 ## More Complex Scenario
 
