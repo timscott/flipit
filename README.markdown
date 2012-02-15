@@ -101,7 +101,7 @@ Start with regions 12 and 31.
 		<add key="regionsWithInRouteNotificationsOn" value="12|31"/>
 	</appSettings>
 
-To roll out the feature, add more region IDs to the pipe delimited list.  When the roll out is complete, just remove the setting.
+To roll out the feature to more regions, add their IDs to the pipe delimited list.  When the roll out is complete, just remove the setting.
 
 # Other Stuff
 
