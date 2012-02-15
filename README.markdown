@@ -1,12 +1,12 @@
 # Introduction
 
-FlipIt is a feature flipper for .NET.  It is a very simple tool with a limited feature set.  We simply want to provide a way to flip features based on any kind of conditions and to change those conditions over time without touching the features themselves.  Put another way we want to respect the Open/Closed principle.  We also want to fully support Inversion of Control.
+FlipIt is a feature flipper.  It provides a simple and fexible way to flip features in a .NET application. Conditionally turn features or and off using any kind of logic, and change those conditions over time without touching the production code where the features are implemented.
 
 # Usage
 
 ## Simple Scenareo
 
-I want to be able to flip a feature on and off without deploying code.
+Scenareo: flip a feature on and off for everyone all the time.
 
 Create a feature.
 
@@ -14,7 +14,7 @@ Create a feature.
 	{
 	    public bool IsOn(IFeatureSettingsProvider featureSettingsProvider)
 	    {
-	        return featureSettingsProvider.Get<bool>("myFeatureIsOn");
+	        return featureSettingsProvider.Get<bool?>("myFeatureIsOn") ?? true; 
 	    }
 	}
 
@@ -39,7 +39,7 @@ Use it one or more places in your app to flip the feature.
 	}
 
 
-Because there is no app setting the feature is **on**.  Let's flip it **off**.
+Notice that we defaulted the feature to **on** if the setting is missing.  Let's flip the feature **off** by adding a setting.
 
 	<appSettings>
 		<add key="myFeatureIsOn" value="false"/>
@@ -47,13 +47,15 @@ Because there is no app setting the feature is **on**.  Let's flip it **off**.
 
 To flip the feature back on, simply delete the app setting, or change the value to `true`.
 
-One last thing.  When you create PlaceWhereMyFeatureIsImplemented, you must supply the flipper, which in turn needs a settings provider.  We normally use an IoC container to do this. For example with StructureMap.
+### IoC
+
+When you create PlaceWhereMyFeatureIsImplemented, you must supply the flipper, which in turn needs a settings provider.  We like to use an IoC container for this. For example with StructureMap.
 
 	container.For<IFeatureSettingsProvider>.Use<AppSettingsFeatureSettingsProvider>();
 
 ## More Complex Scenareo
 
-I want to roll out a feature region by region.
+Scenareo: roll out a feature region by region.  The feature is to send notifications to delivery locations when the order becomes In Route status.
 
 	public class SendInRouteNotificationsFeature : IFeature
 	{
@@ -87,10 +89,12 @@ Flip the feature.
 			//do stuff
 
 			var notifyFeature = new SendInRouteNotificationsFeature(evt.Order.Destination.Region);
-			if (flipper.IfOn(notifyFeature)
+			if (flipper.IfOn(notifyFeature))
 			{
 				SendNotification(evt.Order);
 			}
+
+			//do stuff
 		}
 		
 		private void SendNotification(Order order)
@@ -100,26 +104,26 @@ Flip the feature.
 
 	}
 
-Limit the feature to beta regions 12 and 31.
+Limit the feature initially to regions 12 and 31.
 
 	<appSettings>
 		<add key="regionsWithInRouteNotificationsOn" value="12|31"/>
 	</appSettings>
 
-As we roll out, simply add more region IDs to the pipe delimited list.  When you're done rolling out, just remove the setting.
+Add more region IDs to the pipe delimited list to roll out the feature.  When you're done rolling out, just remove the setting.
 
 # Open/Closed Principle
 
-Once you set up flipping for a feature you can consider that code "closed for modification."  Change you application's behavior by changing settings only.  Worst case, you can change the feature class only.  You should *never* have to change the code where the feature is flipped.
+Code that implements features should be "closed for modification" once we have set up flipping.  We should be able to change application behavior with settings only.  Worst case, we change the feature class only.  We should *never* have to change the code where the feature is flipped.
 
 # Settings
 
 ## What Are Settings?
 
-A setting can be anything. It's whatever information you need to flip a feature based on any kind of logic.  Some flipper tools decide how to flip features based only on users and user groups. You can do that with FlitIt, but it's not baked in.
+A setting can be anything. It's whatever information you need to flip a feature using any kind of logic.  Some flipper tools decide how to flip features based  on users and user groups. You can do that with FlipIt, but it's not baked in.
 
 ## Where Are Settings?
 
 The preceding examples use the built-in `AppSettingsFeatureSettingsProvider` which uses .NET configuration as the settings store.  This is simple and natural in many environments.  However, what if you want non-technical staff (or techies without production access) to be able to flip features?
 
-Create your own implementation of `IFeatureSettingsProvider` and store feature settings any way that you want. For example you could create `SqlServerFeatureSettingsProvider` or `MongoFeatureSettingsProvider`.  From there it's not hard to imagine simple admin UI for feature flipping.
+Create your own implementation of `IFeatureSettingsProvider`. For example you could create `SqlServerFeatureSettingsProvider` or `MongoFeatureSettingsProvider`.  From there it's not hard to imagine simple admin UI for feature flipping.
