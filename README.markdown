@@ -8,7 +8,7 @@ FlipIt is a feature flipper.  It provides a simple and fexible way to flip featu
 
 Scenario: Flip a feature on and off for everyone all the time.
 
-Create a feature.  Let's make it default tp **on** if the setting is missing. You'll see why below.
+Create a feature.  Let's make it default to **on** if the setting is missing. You'll see why below.
 
 	public class MyFeature : IFeature
 	{
