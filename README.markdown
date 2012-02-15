@@ -52,6 +52,8 @@ To flip the feature back on, change the value to `true`.  When you're sure you n
 
 Scenario: Roll out a feature region by region.  (Send notifications to delivery locations when an order changes to In Route status.) 
 
+Create the feature.  Again, we want the feature to be **on** if the setting does not exist.
+
 	public class SendInRouteNotificationsFeature : IFeature
 	{
 		private readonly Region region;
