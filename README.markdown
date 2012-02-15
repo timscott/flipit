@@ -8,7 +8,7 @@ FlipIt is a feature flipper.  It provides a simple and fexible way to flip featu
 
 Scenario: flip a feature on and off for everyone all the time.
 
-Create a feature.
+Create a feature.  Let's make it default **on** if the setting is missing. 
 
 	public class MyFeature : IFeature
 	{
@@ -39,7 +39,7 @@ Use it one or more places in your app to flip the feature.
 	}
 
 
-Notice that we defaulted the feature to **on** if the setting is missing.  Let's flip the feature **off** by adding a setting.
+Let's flip the feature **off** by adding a setting.
 
 	<appSettings>
 		<add key="myFeatureIsOn" value="false"/>
@@ -49,13 +49,13 @@ To flip the feature back on, simply delete the app setting, or change the value 
 
 ### IoC
 
-When you create PlaceWhereMyFeatureIsImplemented, you must supply the flipper, which in turn needs a settings provider.  We like to use an IoC container for this. For example with StructureMap.
+`PlaceWhereMyFeatureIsImplemented` takes adependency on `IFeatureSettingsProvider`. We like to use an IoC container for dependency injection. For example with StructureMap.
 
-	container.For<IFeatureSettingsProvider>.Use<AppSettingsFeatureSettingsProvider>();
+	x.For<IFeatureSettingsProvider>.Use<AppSettingsFeatureSettingsProvider>();
 
 ## More Complex Scenario
 
-Scenario: roll out a feature region by region.  The feature is to send notifications to delivery locations when the order becomes In Route status.
+Scenario: Roll out a feature region by region.  (Send notifications to delivery locations when the order becomes In Route status.) 
 
 	public class SendInRouteNotificationsFeature : IFeature
 	{
@@ -91,26 +91,20 @@ Flip the feature.
 			var notifyFeature = new SendInRouteNotificationsFeature(evt.Order.Destination.Region);
 			if (flipper.IfOn(notifyFeature))
 			{
-				SendNotification(evt.Order);
+				//do it;
 			}
 
 			//do stuff
 		}
-		
-		private void SendNotification(Order order)
-		{
-			//do it
-		}
-
 	}
 
-Limit the feature initially to regions 12 and 31.
+Start with regions 12 and 31.
 
 	<appSettings>
 		<add key="regionsWithInRouteNotificationsOn" value="12|31"/>
 	</appSettings>
 
-Add more region IDs to the pipe delimited list to roll out the feature.  When you're done rolling out, just remove the setting.
+To roll out the feature, add more region IDs to the pipe delimited list.  When you're done rolling out, just remove the setting.
 
 # Open/Closed Principle
 
@@ -120,10 +114,10 @@ Code that implements features should be "closed for modification" once we have s
 
 ## What Are Settings?
 
-A setting can be anything. It's whatever information you need to flip a feature using any kind of logic.  Some flipper tools decide how to flip features based  on users and user groups. You can do that with FlipIt, but it's not baked in.
+A setting can be anything. It's whatever information you need to flip a feature using any kind of logic.  Some flipper tools decide how to flip features based strictly on users and user groups. You can do that with FlipIt, but it's not baked in.
 
 ## Where Are Settings?
 
 The preceding examples use the built-in `AppSettingsFeatureSettingsProvider` which uses .NET configuration as the settings store.  This is simple and natural in many environments.  However, what if you want non-technical staff (or techies without production access) to be able to flip features?
 
-Create your own implementation of `IFeatureSettingsProvider`. For example you could create `SqlServerFeatureSettingsProvider` or `MongoFeatureSettingsProvider`.  From there it's not hard to imagine simple admin UI for feature flipping.
+Create your own implementation of `IFeatureSettingsProvider`. For example, you might create `SqlServerFeatureSettingsProvider` or `MongoFeatureSettingsProvider`.  From there it's not hard to imagine simple admin UI for feature flipping.
