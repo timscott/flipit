@@ -31,7 +31,7 @@ namespace FlipIt
             {
                 return default(T[]);
             }
-            var items = list.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+            var items = list.Split(new[] { '|' }).Select(x => x == string.Empty ? null : x);
             return items.Select(ChangeType<T>).ToArray();
         }
 

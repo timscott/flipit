@@ -12,16 +12,17 @@ namespace FlipIt.Tests
 
     public class when_getting_settings_that_is_a_list : beahves_like_config_settings_provider_test
     {
-        protected static int[] result;
+        protected static int?[] result;
 
-        Because of = () => result = provider.GetList<int>("numberList");
+        Because of = () => result = provider.GetList<int?>("numberList");
 
         It should_get_the_list = () => result
             .Should().Not.Be.Null()
-            .Should().Count.Exactly(4)
+            .Should().Count.Exactly(5)
             .Should().Contain.One(1)
             .Should().Contain.One(3)
             .Should().Contain.One(5)
+            .Should().Contain.One((int?)null)
             .Should().Contain.One(7); 
     }
 
