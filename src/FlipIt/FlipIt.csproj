@@ -39,6 +39,8 @@
   <ItemGroup>
     <Compile Include="FeatureFlipper.cs" />
     <Compile Include="AppSettingsFeatureSettingsProvider.cs" />
+    <Compile Include="FlipItConfig.cs" />
+    <Compile Include="Flipper.cs" />
     <Compile Include="IFeatureFlipper.cs" />
     <Compile Include="IFeatureSettingsProvider.cs" />
     <Compile Include="IFeature.cs" />
