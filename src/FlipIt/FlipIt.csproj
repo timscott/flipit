@@ -42,8 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FeatureChecker.cs" />
-    <Compile Include="ConfigFeatureSettingsProvider.cs" />
-    <Compile Include="IFeatureChecker.cs" />
+    <Compile Include="AppSettingsFeatureSettingsProvider.cs" />
+    <Compile Include="IFeatureFlipper.cs" />
     <Compile Include="IFeatureSettingsProvider.cs" />
     <Compile Include="IFeature.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

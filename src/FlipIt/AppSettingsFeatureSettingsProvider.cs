@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace FlipIt
 {
-    public class ConfigFeatureSettingsProvider : IFeatureSettingsProvider
+    public class AppSettingsFeatureSettingsProvider : IFeatureSettingsProvider
     {
         public T Get<T>(string name)
         {

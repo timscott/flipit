@@ -46,7 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfigFeatureSettingsProviderSpecs.cs" />
+    <Compile Include="AppSettingsFeatureSettingsProviderSpecs.cs" />
+    <Compile Include="FeatureSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

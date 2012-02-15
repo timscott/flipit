@@ -2,11 +2,11 @@ using System;
 
 namespace FlipIt
 {
-    public class FeatureChecker : IFeatureChecker
+    public class FeatureFlipper : IFeatureFlipper
     {
         private readonly IFeatureSettingsProvider featureSettingsProvider;
 
-        public FeatureChecker(IFeatureSettingsProvider featureSettingsProvider)
+        public FeatureFlipper(IFeatureSettingsProvider featureSettingsProvider)
         {
             this.featureSettingsProvider = featureSettingsProvider;
         }
