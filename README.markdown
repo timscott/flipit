@@ -45,7 +45,7 @@ Let's flip the feature **off** by adding a setting.
 		<add key="myFeatureIsOn" value="false"/>
 	</appSettings>
 
-To flip the feature on, change the value to `true`.  When you're sure you never want to flip it off again, delete the setting. (You don't need some old setting hanging around cluttering things up.)
+To flip the feature back on, change the value to `true`.  When you're sure you never want to flip it off again, delete the setting. (You don't need some old setting hanging around cluttering things up.)
 
 
 ## More Complex Scenario
@@ -103,7 +103,7 @@ To roll out the feature, add more region IDs to the pipe delimited list.  When t
 
 # Other Stuff
 
-## IoC
+## Inversion Of Control (IoC)
 
 ### IoC Lovers
 
