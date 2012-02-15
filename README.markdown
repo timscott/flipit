@@ -4,9 +4,9 @@ FlipIt is a feature flipper.  It provides a simple and fexible way to flip featu
 
 # Usage
 
-## Simple Scenareo
+## Simple Scenario
 
-Scenareo: flip a feature on and off for everyone all the time.
+Scenario: flip a feature on and off for everyone all the time.
 
 Create a feature.
 
@@ -53,9 +53,9 @@ When you create PlaceWhereMyFeatureIsImplemented, you must supply the flipper, w
 
 	container.For<IFeatureSettingsProvider>.Use<AppSettingsFeatureSettingsProvider>();
 
-## More Complex Scenareo
+## More Complex Scenario
 
-Scenareo: roll out a feature region by region.  The feature is to send notifications to delivery locations when the order becomes In Route status.
+Scenario: roll out a feature region by region.  The feature is to send notifications to delivery locations when the order becomes In Route status.
 
 	public class SendInRouteNotificationsFeature : IFeature
 	{
