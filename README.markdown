@@ -47,12 +47,26 @@ Let's flip the feature **off** by adding a setting.
 
 To flip the feature on, change the value to `true`.  When you're sure you never want to flip it off again, delete the setting. (You don't need some old setting hanging around cluttering things up.)
 
-### IoC
+### IoC Lovers
 
-Notice that `PlaceWhereMyFeatureIsImplemented` depends on `IFeatureFlipper`.  Of course you can fulfil dependencies yourself, but we perfer to use an IoC container. For example with StructureMap.
+The above examples provide dependencies with constructor injection. For that you probably want to use an IoC container. Configure FlipIt in your container, for example with StructureMap.
 
 	factory.For<IFeatureFlipper>().Use<FeatureFlipper>();
 	factory.For<IFeatureSettingsProvider>().Use<AppSettingsFeatureSettingsProvider>();
+
+### IoC Haters
+
+Use the built in static class instead of providing an instance via the constructor.  But don't blame us when your code is hard to unit test.
+
+	Flipper.DoIfOn(new MyFeature(), () => 
+	{
+		//do the feature
+	});
+
+The default settings provider is `AppSettingsFeatureSettingsProvider`.  You can change it.
+
+	FlipItConfig.FeatureSettingsProvider = new SomeCustomFeatureSettingsProvider();
+
 
 ## More Complex Scenario
 
