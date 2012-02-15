@@ -109,7 +109,7 @@ To roll out the feature to more regions, add their IDs to the pipe delimited lis
 
 ### IoC Lovers
 
-The above examples provide dependencies with constructor injection. For that you probably want to use an IoC container. Configure FlipIt in your container, for example with StructureMap.
+In the above examples we satisfy dependencies using constructor injection. For that you probably want to use an IoC container. Configure FlipIt in your container, for example with StructureMap.
 
 	factory.For<IFeatureFlipper>().Use<FeatureFlipper>();
 	factory.For<IFeatureSettingsProvider>().Use<AppSettingsFeatureSettingsProvider>();
