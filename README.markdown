@@ -6,9 +6,9 @@ FlipIt is a feature flipper.  It provides a simple and fexible way to flip featu
 
 ## Simple Scenario
 
-Scenario: Flip a feature on and off for everyone all the time.  You'll see why below.
+Scenario: Flip a feature on and off for everyone all the time.
 
-Create a feature.  Let's make it default **on** if the setting is missing. 
+Create a feature.  Let's make it default tp **on** if the setting is missing. You'll see why below.
 
 	public class MyFeature : IFeature
 	{
@@ -18,7 +18,7 @@ Create a feature.  Let's make it default **on** if the setting is missing.
 	    }
 	}
 
-Use the feature one or more places in your app to flip the feature.
+Use it in one or more places in your app to flip the feature.
 
 	public class PlaceWhereMyFeatureIsImplemented
 	
@@ -45,11 +45,11 @@ Let's flip the feature **off** by adding a setting.
 		<add key="myFeatureIsOn" value="false"/>
 	</appSettings>
 
-To flip the feature on, change the value to `true`.  When you're sure you never want to turn it off again, you don't need that setting hanging around clutting things up.  Simply delete it.
+To flip the feature on, change the value to `true`.  When you're sure you never want to flip it off again, delete the setting. (You don't need some old setting hanging around cluttering things up.)
 
 ### IoC
 
-`PlaceWhereMyFeatureIsImplemented` has a dependency on `IFeatureSettingsProvider`. We like to use an IoC container for dependency injection. For example with StructureMap.
+Notice that `PlaceWhereMyFeatureIsImplemented` has a dependency on `IFeatureSettingsProvider`.  You can create that yourself, but we like to use an IoC container. For example with StructureMap.
 
 	x.For<IFeatureSettingsProvider>.Use<AppSettingsFeatureSettingsProvider>();
 
@@ -68,7 +68,7 @@ Scenario: Roll out a feature region by region.  (Send notifications to delivery 
 
 	    public bool IsOn(IFeatureSettingsProvider featureSettingsProvider)
 	    {
-	        var onRegionIds = featureSettingsProvider.GetList<in>("regionsWithInRouteNotificationsOn");
+	        var onRegionIds = featureSettingsProvider.GetList<int>("regionsWithInRouteNotificationsOn");
 			return onRegionIds == null || onRegionIds.Contains(region.Id);
 	    }
 	}
@@ -108,16 +108,16 @@ To roll out the feature, add more region IDs to the pipe delimited list.  When t
 
 # Open/Closed Principle
 
-Code that implements features should be "closed for modification" after we set up flipping.  We want to be able to change application behavior with settings only.  Worst case, we should only have to change the feature class.  We should *never* have to change the code where the feature is flipped.
+Code that implements features should be "closed for modification" after flipping is set up.  We want to be able to change application behavior with settings only.  Worst case, we should only have to change the feature class.  We should *never* have to change the code where the feature is flipped.
 
 # Settings
 
 ## What Are Settings?
 
-A setting can be anything. It is whatever bits of information you need to flip a feature using any kind of logic.  Some flipper tools decide how to flip features based strictly on users and user groups. You can do that with FlipIt, but it's not baked in.
+A setting can be anything. It's whatever bits of information you need to flip a feature using custom logic.  Some feature flippers only allow `on` and `off` settings.  That's too limiting for our needs.  Some feature flippers are based strictly on users and user groups. You can do that with FlipIt, but it's not baked in.
 
 ## Where Are Settings?
 
 The preceding examples use the built-in `AppSettingsFeatureSettingsProvider` which uses .NET configuration as the settings store.  This is simple and natural in many environments.  However, what if you want non-technical staff (or techies without production access) to be able to flip features?
 
-Create your own implementation of `IFeatureSettingsProvider`. For example, you might create `SqlServerFeatureSettingsProvider` or `MongoFeatureSettingsProvider`.  From there it's not hard to imagine simple admin UI for feature flipping.  Oh yeah, if you create these implementations, please share!
+Create your own implementation of `IFeatureSettingsProvider`. For example, you might create `SqlServerFeatureSettingsProvider` or `MongoFeatureSettingsProvider`.  From there it's easy to imagine a simple admin UI for feature flipping.  Oh yeah, if you create any of these implementations, please share!
