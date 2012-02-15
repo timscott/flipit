@@ -1,6 +1,6 @@
 # Introduction
 
-FlipIt is a feature flipper.  It provides a simple and fexible way to flip features in a .NET application. Conditionally turn features or and off using any kind of logic. Change those conditions over time without touching the production code where the features are implemented.
+FlipIt is a feature flipper.  It provides a simple and flexible way to flip features in a .NET application. Conditionally turn features or and off using any kind of logic. Change those conditions over time without touching the production code where the features are implemented.
 
 # Usage
 
