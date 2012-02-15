@@ -101,16 +101,18 @@ Start with regions 12 and 31.
 
 To roll out the feature, add more region IDs to the pipe delimited list.  When the roll out is complete, just remove the setting.
 
-# IoC
+# Other Stuff
 
-## IoC Lovers
+## IoC
+
+### IoC Lovers
 
 The above examples provide dependencies with constructor injection. For that you probably want to use an IoC container. Configure FlipIt in your container, for example with StructureMap.
 
 	factory.For<IFeatureFlipper>().Use<FeatureFlipper>();
 	factory.For<IFeatureSettingsProvider>().Use<AppSettingsFeatureSettingsProvider>();
 
-## IoC Haters
+### IoC Haters
 
 Use the built in static class instead of providing an instance via the constructor.  But don't blame us when your code is hard to unit test.
 
@@ -123,17 +125,17 @@ The default settings provider is `AppSettingsFeatureSettingsProvider`.  You can 
 
 	FlipItConfig.FeatureSettingsProvider = new SomeCustomFeatureSettingsProvider();
 
-# Open/Closed Principle
+## Open/Closed Principle
 
 Code that implements features should be "closed for modification" after flipping is set up.  We want to be able to change application behavior with settings only.  Worst case, we should only have to change the feature class.  We should *never* have to change the code where the feature is flipped.
 
-# Settings
+## Settings
 
-## What Are Settings?
+### What Are Settings?
 
 A setting can be anything. It's whatever bits of information you need to flip a feature using custom logic.  Some feature flippers only allow `on` and `off` settings.  That's too limiting for our needs.  Some feature flippers are based strictly on users and user groups. You can do that with FlipIt, but it's not baked in.
 
-## Where Are Settings?
+### Where Are Settings?
 
 The preceding examples use the built-in `AppSettingsFeatureSettingsProvider` which uses .NET configuration as the settings store.  This is simple and natural in many environments.  However, what if you want non-technical staff (or techies without production access) to be able to flip features?
 
