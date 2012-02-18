@@ -145,4 +145,4 @@ The preceding examples create features using the base classes `BooleanFeature` a
 
 ### Missing Settings
 
-Settings have a `Missing` property.  The aforementioned base classes all use these settings to flip features, and they all treat a feature as `ON` if a feature is missing.  The logic of this default behavior is simple.  Features tend to move from `OFF` to `ON`.  We don't want a bunch of old settings hanging around.  So a removed setting make a feature `ON`.
+Settings have a `Missing` property.  The aforementioned base classes all use these settings to flip features, and they all treat a feature as `ON` if a setting is missing.  The logic of this default behavior is simple.  Features tend to move from `OFF` to `ON`.  We don't want a bunch of old settings hanging around.  So a removed setting make a feature `ON`.
