@@ -5,7 +5,7 @@ FlipIt is a feature flipper.  It provides a simple and flexible way to flip feat
  * Conditionally turn features `OFF` and `ON` using custom logic per feature
  * Change beahvior over time without touching the production code where features are implemented
 
-This interface embodies the essence of FlipIt.
+This interface is the essence of FlipIt.
 
     public interface IFeature
     {
@@ -127,11 +127,11 @@ The default settings provider is `AppSettingsFeatureSettingsProvider`.  You can 
 
 ## Open/Closed Principle
 
-Code that implements features should be "closed for modification" after flipping is set up.  We want to be able to change application behavior with settings only.  Worst case, we should only have to change the feature class.  We should *never* have to change the code where the feature is flipped.
+Code that implements features should be "closed for modification" after flipping is set up.  We want to be able to change application behavior with settings only.  Worst case, we should only have to change the feature class.  We should *never* have to change the code where the feature is actually implemented.
 
 ## Making Features
 
-The preceding examples create features using the base classes `BooleanFeature` and `ListFeature<T>`.  There's `Feature<T>` too.  But you don't have to use these.  It's easy to create features from scratch that do anything you can imagine.
+The preceding examples create features using the base classes `BooleanFeature` and `ListFeature<T>`.  There's `Feature<T>` too.  These are nice, but you don't have to use them.  It's easy to create features from scratch that do anything you can imagine.
 
 	public class CoinTossFeature : IFeature
 	{
@@ -155,4 +155,4 @@ Create your own implementation of `IFeatureSettingsProvider`. For example, you m
 
 ## Missing Settings
 
-All of the built-in Feature classes use feature settings to flip features.  They all treat a feature as `ON` if a setting is missing (by looking at the Missing property).  The logic is simple: features tend to move from `OFF` to permanently `ON`.  We don't want a bunch of old settings hanging around.  So when we're done flipping a feature, we can just remove the setting.
+All of the built-in Feature classes use settings to flip features.  They treat a feature as `ON` if a setting is missing (by looking at the Missing property).  The reason is simple: features tend to move from `OFF` to permanently `ON`.  We don't want a bunch of old settings hanging around.  So when we're done flipping a feature, we can just remove the setting and leave the code alone.
