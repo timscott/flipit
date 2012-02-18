@@ -104,7 +104,7 @@ In the above examples we satisfy dependencies using constructor injection. For t
 
 ### IoC Haters
 
-Use the built in static class instead of providing an instance via the constructor.  But don't blame us when your code is hard to unit test.
+Use the built-in static class instead of providing an instance via the constructor.  But don't blame us when your code is hard to unit test.
 
 	Flipper.DoIfOn(new MyFeature(), () => 
 	{
