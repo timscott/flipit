@@ -1,10 +1,10 @@
 # Introduction
 
-FlipIt is a feature flipper.  It provides a simple and flexible way to flip features in a .NET application. Conditionally turn features or and off using any kind of logic. Change those conditions over time without touching the production code where the features are implemented.
+FlipIt is a feature flipper.  It provides a simple and flexible way to flip features in a .NET application. Use FlipIt to conditionally turn features or and off using your custom logic. Change those conditions over time without touching the production code where the features are implemented.
 
 # Usage
 
-## Simple Scenario
+## Simple Case
 
 Scenario: Flip a feature on and off for everyone all the time.
 
@@ -15,7 +15,7 @@ Create a feature.
 	    public MyFeature() : base("my_feature_is_on") { }
 	}
 
-Use it in one or more places in your app to flip the feature.
+Use it anywhere in your app to flip the feature.
 
 	public class WhereMyFeatureIsImplemented
 	{
@@ -36,16 +36,16 @@ Use it in one or more places in your app to flip the feature.
 	}
 
 
-Let's flip the feature `OFF` by adding a setting.
+The feature is `ON` by default.  Let's flip it `OFF` by adding a setting.  One way to store settings is in your application's config.
 
 	<appSettings>
 		<add key="my_feature_is_on" value="false"/>
 	</appSettings>
 
-To flip the feature back `ON`, change the value to `true`.  When you're sure you never want to flip it off again, delete the setting. (You don't need some old setting hanging around cluttering things up.)
+To flip the feature back `ON`, change the value to `true`.  When you're sure you never want to flip it off again, delete the setting.
 
 
-## More Complex Scenario
+## More Complex Case
 
 Scenario: Roll out a feature region by region.  (Send notifications to delivery locations when an order changes to In Route status.) 
 
@@ -135,7 +135,7 @@ The preceding examples create features using the base classes `BooleanFeature` a
 
 ### What Are Settings?
 
-A setting can be anything. It's whatever bits of information you need to flip a feature using custom logic.  Some feature flippers only allow `on` and `off` settings.  That's too limiting for our needs.  Some feature flippers are based strictly on users and user groups. You can do that with FlipIt, but it's not baked in.
+A setting can be anything. It's whatever bits of information you need to flip a feature using custom logic.  Some feature flippers only allow `ON` and `OFF` settings.  That's too limiting for our needs.  Some feature flippers are based strictly on users and user groups. You can do that with FlipIt, but it's not baked in.
 
 ### Where Are Settings?
 
