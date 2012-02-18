@@ -1,11 +1,18 @@
 using System;
+using FlipIt.Features;
+using FlipIt.Settings;
 
 namespace FlipIt
 {
+    /// <summary>
+    /// Feature flipper class.  This class exists to provide a level of indirection primarily to support dependency 
+    /// injection patterns.
+    /// </summary>
     public class FeatureFlipper : IFeatureFlipper
     {
         private readonly IFeatureSettingsProvider featureSettingsProvider;
 
+        /// <param name="featureSettingsProvider">The feature settings provider.</param>
         public FeatureFlipper(IFeatureSettingsProvider featureSettingsProvider)
         {
             this.featureSettingsProvider = featureSettingsProvider;

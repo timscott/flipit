@@ -1,15 +1,17 @@
+using FlipIt.Settings;
+
 namespace FlipIt.Tests
 {
     public class NullFeatureSettingsProvider : IFeatureSettingsProvider
     {
-        public T Get<T>(string name)
+        public FeatureSetting<T> Get<T>(string name)
         {
-            return default(T);
+            return new FeatureSetting<T>(false, default(T));
         }
 
-        public T[] GetList<T>(string name)
+        public FeatureListSetting<T> GetList<T>(string name)
         {
-            return default(T[]);
+            return new FeatureListSetting<T>(false, default(T[]));
         }
     }
 }

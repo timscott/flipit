@@ -8,10 +8,7 @@ namespace FlipIt.Tests
         protected static FeatureFlipper flipper;
         protected static TestFeature feature;
 
-        Establish context = () =>
-        {
-            flipper = new FeatureFlipper(new NullFeatureSettingsProvider());
-        };
+        Establish context = () => flipper = new FeatureFlipper(new NullFeatureSettingsProvider());
     }
 
     public abstract class behaves_like_feature_flipper_spec_where_test_feature_is_on : behaves_like_feature_flipper_spec

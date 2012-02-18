@@ -8,23 +8,20 @@ FlipIt is a feature flipper.  It provides a simple and flexible way to flip feat
 
 Scenario: Flip a feature on and off for everyone all the time.
 
-Create a feature.  Let's make it default to **on** if the setting is missing. You'll see why below.
+Create a feature.
 
-	public class MyFeature : IFeature
+	public class MyFeature : BooleanFeature
 	{
-	    public bool IsOn(IFeatureSettingsProvider featureSettingsProvider)
-	    {
-	        return featureSettingsProvider.Get<bool?>("myFeatureIsOn") ?? true; 
-	    }
+	    public MyFeature() : base("my_feature_is_on") { }
 	}
 
 Use it in one or more places in your app to flip the feature.
 
-	public class PlaceWhereMyFeatureIsImplemented
-	
+	public class WhereMyFeatureIsImplemented
+	{
 		private readonly IFeatureFlipper flipper;
 
-		public PlaceWhereMyFeatureIsImplemented(IFeatureFlipper flipper)
+		public WhereMyFeatureIsImplemented(IFeatureFlipper flipper)
 		{
 			this.flipper = flipper;
 		}
@@ -39,35 +36,26 @@ Use it in one or more places in your app to flip the feature.
 	}
 
 
-Let's flip the feature **off** by adding a setting.
+Let's flip the feature `OFF` by adding a setting.
 
 	<appSettings>
-		<add key="myFeatureIsOn" value="false"/>
+		<add key="my_feature_is_on" value="false"/>
 	</appSettings>
 
-To flip the feature back on, change the value to `true`.  When you're sure you never want to flip it off again, delete the setting. (You don't need some old setting hanging around cluttering things up.)
+To flip the feature back `ON`, change the value to `true`.  When you're sure you never want to flip it off again, delete the setting. (You don't need some old setting hanging around cluttering things up.)
 
 
 ## More Complex Scenario
 
 Scenario: Roll out a feature region by region.  (Send notifications to delivery locations when an order changes to In Route status.) 
 
-Create the feature.  Again, we want the feature to be **on** if the setting does not exist.
+Create the feature.
 
-	public class SendInRouteNotificationsFeature : IFeature
+	public class SendInRouteNotificationsFeature : ListFeature<int>
 	{
-		private readonly Region region;
-
-		public SendInRouteNotificationsFeature(Region region)
-		{
-			this.region = region;
-		}
-
-	    public bool IsOn(IFeatureSettingsProvider featureSettingsProvider)
-	    {
-	        var onRegionIds = featureSettingsProvider.GetList<int>("regionsWithInRouteNotificationsOn");
-			return onRegionIds == null || onRegionIds.Contains(region.Id);
-	    }
+		public SendInRouteNotificationsFeature(Region region) : base(
+			settingName: "region_ids_with_in_route_notifications_enabled", 
+			isOnFunc: ids => ids.Contains(region.Id)) { }
 	}
 
 Flip the feature.
@@ -98,7 +86,7 @@ Flip the feature.
 Start with regions 12 and 31.
 
 	<appSettings>
-		<add key="regionsWithInRouteNotificationsOn" value="12|31"/>
+		<add key="region_ids_with_in_route_notifications_enabled" value="12|31"/>
 	</appSettings>
 
 To roll out the feature to more regions, add their IDs to the pipe delimited list.  When the roll out is complete, just remove the setting.
@@ -142,3 +130,16 @@ A setting can be anything. It's whatever bits of information you need to flip a 
 The preceding examples use the built-in `AppSettingsFeatureSettingsProvider` which uses .NET configuration as the settings store.  This is simple and natural in many environments.  However, what if you want non-technical staff (or techies without production access) to be able to flip features?
 
 Create your own implementation of `IFeatureSettingsProvider`. For example, you might create `SqlServerFeatureSettingsProvider` or `MongoFeatureSettingsProvider`.  From there it's easy to imagine a simple admin UI for feature flipping.  Oh yeah, if you create any of these implementations, please share!
+
+## Making Features
+
+The preceding examples create features using the base classes `BooleanFeature` and `ListFeature<T>`.  There's `Feature<T>` too.  But you don't have to use these.  It's easy to create features from scratch that do anything you can imagine.
+
+	public class CoinTossFeature : IFeature
+	{
+	    public bool IsOn(IFeatureSettingsProvider featureSettingsProvider)
+	    {
+	        return new Random().Next(2) == 1; //good enough 
+	    }
+	}
+

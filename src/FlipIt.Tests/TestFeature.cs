@@ -1,3 +1,6 @@
+using FlipIt.Features;
+using FlipIt.Settings;
+
 namespace FlipIt.Tests
 {
     public class TestFeature : IFeature

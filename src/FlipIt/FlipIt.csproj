@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\FlipIt.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -37,14 +38,22 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Features\BooleanFeature.cs" />
     <Compile Include="FeatureFlipper.cs" />
-    <Compile Include="AppSettingsFeatureSettingsProvider.cs" />
+    <Compile Include="Settings\AppSettingsFeatureSettingsProvider.cs" />
+    <Compile Include="Settings\FeatureListSetting.cs" />
+    <Compile Include="Settings\FeatureSetting.cs" />
+    <Compile Include="Settings\FeatureSettingBase.cs" />
     <Compile Include="FlipItConfig.cs" />
     <Compile Include="Flipper.cs" />
     <Compile Include="IFeatureFlipper.cs" />
-    <Compile Include="IFeatureSettingsProvider.cs" />
-    <Compile Include="IFeature.cs" />
+    <Compile Include="Settings\IFeatureSettingsProvider.cs" />
+    <Compile Include="Features\IFeature.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Features\Feature.cs" />
+    <Compile Include="Features\ListFeature.cs" />
+    <Compile Include="Settings\ThreadSafeCache.cs" />
+    <Compile Include="Settings\ICache.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
