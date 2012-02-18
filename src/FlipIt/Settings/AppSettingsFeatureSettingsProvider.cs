@@ -7,7 +7,7 @@ namespace FlipIt.Settings
     /// <summary>
     /// An implementation of IFeatureSettingsProvider based on .NET configuration app settings.
     /// </summary>
-    public class AppSettingsFeatureSettingsProvider : IFeatureSettingsProvider
+    public class ConfigFeatureSettingsProvider : IFeatureSettingsProvider
     {
         private readonly ICache<string, FeatureSettingBase> cachedSettings = new ThreadSafeCache<string, FeatureSettingBase>();
 

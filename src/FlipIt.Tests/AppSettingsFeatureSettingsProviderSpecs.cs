@@ -6,9 +6,9 @@ namespace FlipIt.Tests
 {
     public abstract class beahves_like_config_settings_provider_test
     {
-        protected static AppSettingsFeatureSettingsProvider provider;
+        protected static ConfigFeatureSettingsProvider provider;
 
-        Establish context = () => provider = new AppSettingsFeatureSettingsProvider();
+        Establish context = () => provider = new ConfigFeatureSettingsProvider();
     }
 
     public class when_getting_list_setting : beahves_like_config_settings_provider_test

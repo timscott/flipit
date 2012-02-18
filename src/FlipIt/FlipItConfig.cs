@@ -14,7 +14,7 @@ namespace FlipIt
         /// </summary>
         public static IFeatureSettingsProvider FeatureSettingsProvider
         {
-            get { return featureSettingsProvider = (featureSettingsProvider ?? new AppSettingsFeatureSettingsProvider()); }
+            get { return featureSettingsProvider = (featureSettingsProvider ?? new ConfigFeatureSettingsProvider()); }
             set { featureSettingsProvider = value; }
         }
     }

@@ -22,7 +22,7 @@ Create a feature.
 
 	public class MyFeature : BooleanFeature
 	{
-	    public MyFeature() : base("my_feature_is_on") { }
+	    public MyFeature() : base("my_feature_enabled") { }
 	}
 
 Use it anywhere in your app to conditionally enable the feature.
@@ -49,7 +49,7 @@ Use it anywhere in your app to conditionally enable the feature.
 The feature is `ON` by default.  Let's flip it `OFF` by adding a setting.  One way to store settings is in your application's config.
 
 	<appSettings>
-		<add key="my_feature_is_on" value="false"/>
+		<add key="my_feature_enabled" value="false"/>
 	</appSettings>
 
 To flip the feature back `ON`, change the value to `true`.  When you're sure you never want to flip it off again, delete the setting.
@@ -110,7 +110,7 @@ To roll out the feature to more regions, add their IDs to the pipe delimited lis
 In the preceding examples we satisfy dependencies using constructor injection. For that you probably want to use an IoC container. Configure FlipIt in your container, for example with StructureMap.
 
 	factory.For<IFeatureFlipper>().Use<FeatureFlipper>();
-	factory.For<IFeatureSettingsProvider>().Use<AppSettingsFeatureSettingsProvider>();
+	factory.For<IFeatureSettingsProvider>().Use<ConfigFeatureSettingsProvider>();
 
 ### IoC Haters
 
@@ -121,7 +121,7 @@ Use the built in static class instead of providing an instance via the construct
 		//do the feature
 	});
 
-The default settings provider is `AppSettingsFeatureSettingsProvider`.  You can change it.
+The default settings provider is `ConfigFeatureSettingsProvider`.  You can change it.
 
 	FlipItConfig.FeatureSettingsProvider = new SomeCustomFeatureSettingsProvider();
 
@@ -149,7 +149,7 @@ A setting can be anything. It's whatever bits of information you need to flip a 
 
 ### Where Are Settings?
 
-The preceding examples use the built-in `AppSettingsFeatureSettingsProvider` which uses .NET configuration as the settings store.  This is simple and natural in many environments.  However, what if you want non-technical staff (or techies without production access) to be able to flip features?
+The preceding examples use the built-in `ConfigFeatureSettingsProvider` which uses .NET configuration as the settings store.  This is simple and natural in many environments.  However, what if you want non-technical staff (or techies without production access) to be able to flip features?
 
 Create your own implementation of `IFeatureSettingsProvider`. For example, you might create `SqlServerFeatureSettingsProvider` or `MongoFeatureSettingsProvider`.  From there it's easy to imagine a simple admin UI for feature flipping.  Oh yeah, if you create any of these implementations, please share!
 
