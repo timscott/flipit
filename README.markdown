@@ -119,18 +119,6 @@ The default settings provider is `AppSettingsFeatureSettingsProvider`.  You can 
 
 Code that implements features should be "closed for modification" after flipping is set up.  We want to be able to change application behavior with settings only.  Worst case, we should only have to change the feature class.  We should *never* have to change the code where the feature is flipped.
 
-## Settings
-
-### What Are Settings?
-
-A setting can be anything. It's whatever bits of information you need to flip a feature using custom logic.  Some feature flippers only allow `on` and `off` settings.  That's too limiting for our needs.  Some feature flippers are based strictly on users and user groups. You can do that with FlipIt, but it's not baked in.
-
-### Where Are Settings?
-
-The preceding examples use the built-in `AppSettingsFeatureSettingsProvider` which uses .NET configuration as the settings store.  This is simple and natural in many environments.  However, what if you want non-technical staff (or techies without production access) to be able to flip features?
-
-Create your own implementation of `IFeatureSettingsProvider`. For example, you might create `SqlServerFeatureSettingsProvider` or `MongoFeatureSettingsProvider`.  From there it's easy to imagine a simple admin UI for feature flipping.  Oh yeah, if you create any of these implementations, please share!
-
 ## Making Features
 
 The preceding examples create features using the base classes `BooleanFeature` and `ListFeature<T>`.  There's `Feature<T>` too.  But you don't have to use these.  It's easy to create features from scratch that do anything you can imagine.
@@ -142,6 +130,18 @@ The preceding examples create features using the base classes `BooleanFeature` a
 	        return new Random().Next(2) == 1; //good enough 
 	    }
 	}
+
+## Settings
+
+### What Are Settings?
+
+A setting can be anything. It's whatever bits of information you need to flip a feature using custom logic.  Some feature flippers only allow `on` and `off` settings.  That's too limiting for our needs.  Some feature flippers are based strictly on users and user groups. You can do that with FlipIt, but it's not baked in.
+
+### Where Are Settings?
+
+The preceding examples use the built-in `AppSettingsFeatureSettingsProvider` which uses .NET configuration as the settings store.  This is simple and natural in many environments.  However, what if you want non-technical staff (or techies without production access) to be able to flip features?
+
+Create your own implementation of `IFeatureSettingsProvider`. For example, you might create `SqlServerFeatureSettingsProvider` or `MongoFeatureSettingsProvider`.  From there it's easy to imagine a simple admin UI for feature flipping.  Oh yeah, if you create any of these implementations, please share!
 
 ## Missing Settings
 
