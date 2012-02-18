@@ -5,7 +5,7 @@ FlipIt is a feature flipper.  It provides a simple and flexible way to flip feat
  * Conditionally turn features `OFF` and `ON` using custom logic per feature
  * Change behavior over time without touching the production code where features are implemented
 
-This one interface kinda shows the essence of FlipIt.
+This interface kinda shows the essence of FlipIt.
 
     public interface IFeature
     {
@@ -16,7 +16,7 @@ This one interface kinda shows the essence of FlipIt.
 
 ## Simple Case
 
-Scenario: Flip a feature on and off for everyone all the time.
+Scenario: Flip a feature `ON` and `OFF` for everyone all the time.
 
 Create a feature.
 
@@ -25,7 +25,7 @@ Create a feature.
 	    public MyFeature() : base("my_feature_is_on") { }
 	}
 
-Use it anywhere in your app to flip the feature.
+Use it anywhere in your app to conditionally enable the feature.
 
 	public class WhereMyFeatureIsImplemented
 	{
@@ -68,7 +68,7 @@ Create the feature.
 			isOnFunc: ids => ids.Contains(region.Id)) { }
 	}
 
-Flip the feature.
+Use it.
 
 	public class HandleOrderInRouteEvent
 	{
@@ -107,7 +107,7 @@ To roll out the feature to more regions, add their IDs to the pipe delimited lis
 
 ### IoC Lovers
 
-In the above examples we satisfy dependencies using constructor injection. For that you probably want to use an IoC container. Configure FlipIt in your container, for example with StructureMap.
+In the preceding examples we satisfy dependencies using constructor injection. For that you probably want to use an IoC container. Configure FlipIt in your container, for example with StructureMap.
 
 	factory.For<IFeatureFlipper>().Use<FeatureFlipper>();
 	factory.For<IFeatureSettingsProvider>().Use<AppSettingsFeatureSettingsProvider>();
@@ -127,11 +127,11 @@ The default settings provider is `AppSettingsFeatureSettingsProvider`.  You can 
 
 ## Open/Closed Principle
 
-Code that implements features should be "closed for modification" after flipping is set up.  We want to be able to change application behavior with settings only.  Worst case, we should only have to change the feature class.  We should *never* have to change the code where the feature is actually implemented.
+Code that implements features should be "closed for modification" after flipping has been set up.  We want to be able to change how features are applied by changing settings only.  Worst case, we should only have to change the feature class.  We should *never* have to change the code where the feature is actually implemented.
 
 ## Making Features
 
-The preceding examples create features using the base classes `BooleanFeature` and `ListFeature<T>`.  There's `Feature<T>` too.  These are nice, but you don't have to use them.  It's easy to create features from scratch that do anything you can imagine.
+In the usage examples we create features using the base classes `BooleanFeature` and `ListFeature<T>`.  There's `Feature<T>` too.  These are nice, but you don't have to use them.  It's easy to create features from scratch that do anything you can imagine.
 
 	public class CoinTossFeature : IFeature
 	{
