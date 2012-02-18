@@ -3,9 +3,9 @@
 FlipIt is a feature flipper.  It provides a simple and flexible way to flip features in a .NET application. Use FlipIt to:
 
  * Conditionally turn features `OFF` and `ON` using custom logic per feature
- * Change beahvior over time without touching the production code where features are implemented
+ * Change behavior over time without touching the production code where features are implemented
 
-This interface is the essence of FlipIt.
+This one interface kinda shows the essence of FlipIt.
 
     public interface IFeature
     {
