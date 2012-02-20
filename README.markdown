@@ -4,10 +4,10 @@ FlipIt is a feature flipper.  It provides a simple and flexible way to flip feat
 
 The essence of FlipIt can be seen in this interface.
 
-    public interface IFeature
-    {
-        bool IsOn(IFeatureSettingsProvider featureSettingsProvider);
-    }
+  	public interface IFeature
+  	{
+  		bool IsOn(IFeatureSettingsProvider featureSettingsProvider);
+  	}
 
 # Usage
 
@@ -17,9 +17,9 @@ Scenario: Flip a feature `ON` and `OFF` for everyone all the time.
 
 Create a feature.
 
-  public class MyFeature : BooleanFeature
-	{
-	    public MyFeature() : base("my_feature_enabled") { }
+ 	public class MyFeature : BooleanFeature
+  	{
+		public MyFeature() : base("my_feature_enabled") { }
 	}
 
 Use it anywhere in your app to conditionally enable the feature.
