@@ -1,6 +1,6 @@
 using System;
-using FlipIt.Features;
 using FlipIt.Settings;
+using FlipIt.Switches;
 
 namespace FlipIt
 {
@@ -18,12 +18,12 @@ namespace FlipIt
             this.featureSettingsProvider = featureSettingsProvider;
         }
 
-        public bool IsOn<T>(T feature) where T : IFeature
+        public bool IsOn<T>(T feature) where T : IFeatureSwitch
         {
             return feature.IsOn(featureSettingsProvider);
         }
 
-        public void DoIfOn<T>(T feature, Action action) where T : IFeature
+        public void DoIfOn<T>(T feature, Action action) where T : IFeatureSwitch
         {
             if (IsOn(feature))
             {

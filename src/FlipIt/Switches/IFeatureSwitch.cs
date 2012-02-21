@@ -1,11 +1,11 @@
 using FlipIt.Settings;
 
-namespace FlipIt.Features
+namespace FlipIt.Switches
 {
     /// <summary>
-    /// An interface for features.
+    /// An interface for feature switches.
     /// </summary>
-    public interface IFeature
+    public interface IFeatureSwitch
     {
         /// <summary>
         /// Whether the feature is OFF or ON.

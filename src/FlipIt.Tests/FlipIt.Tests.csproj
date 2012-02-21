@@ -55,7 +55,7 @@
     <Compile Include="FeatureFlipperSpecs.cs" />
     <Compile Include="FlipperSpecs.cs" />
     <Compile Include="NullFeatureSettingsProvider.cs" />
-    <Compile Include="TestFeature.cs" />
+    <Compile Include="TestFeatureSwitch.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

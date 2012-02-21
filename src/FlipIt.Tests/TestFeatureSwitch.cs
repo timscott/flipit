@@ -1,13 +1,13 @@
-using FlipIt.Features;
 using FlipIt.Settings;
+using FlipIt.Switches;
 
 namespace FlipIt.Tests
 {
-    public class TestFeature : IFeature
+    public class TestFeatureSwitch : IFeatureSwitch
     {
         private readonly bool isOn;
 
-        public TestFeature(bool isOn)
+        public TestFeatureSwitch(bool isOn)
         {
             this.isOn = isOn;
         }

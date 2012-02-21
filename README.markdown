@@ -4,7 +4,7 @@ FlipIt is a feature flipper.  It provides a simple and flexible way to flip feat
 
 The essence of FlipIt can be seen in this interface.
 
-  	public interface IFeature
+  	public interface IFeatureSwitch
   	{
   		bool IsOn(IFeatureSettingsProvider featureSettingsProvider);
   	}
@@ -17,9 +17,9 @@ Scenario: Flip a feature `ON` and `OFF` for everyone all the time.
 
 Create a feature.
 
- 	public class MyFeature : BooleanFeature
+ 	public class MyFeatureSwitch : BooleanFeatureSwitch
   	{
-		public MyFeature() : base("my_feature_enabled") { }
+		public MyFeatureSwitch() : base("my_feature_enabled") { }
 	}
 
 Use it anywhere in your app to conditionally enable the feature.
@@ -35,7 +35,7 @@ Use it anywhere in your app to conditionally enable the feature.
 
 		public void DoSomething()
 		{
-			flipper.DoIfOn(new MyFeature(), () => 
+			flipper.DoIfOn(new MyFeatureSwitch(), () => 
 			{
 				//do the feature
 			});
@@ -58,9 +58,9 @@ Scenario: Roll out a feature region by region.  (Send notifications to delivery 
 
 Create the feature.
 
-	public class SendInRouteNotificationsFeature : ListFeature<int>
+	public class SendInRouteNotificationsFeatureSwitch : ListFeatureSwitch<int>
 	{
-		public SendInRouteNotificationsFeature(Region region) : base(
+		public SendInRouteNotificationsFeatureSwitch(Region region) : base(
 			settingName: "region_ids_with_in_route_notifications_enabled", 
 			isOnFunc: ids => ids.Contains(region.Id)) { }
 	}
@@ -80,8 +80,8 @@ Use it.
 		{
 			//do stuff
 
-			var notifyFeature = new SendInRouteNotificationsFeature(evt.Order.Destination.Region);
-			if (flipper.IfOn(notifyFeature))
+			var switch = new SendInRouteNotificationsFeatureSwitch(evt.Order.Destination.Region);
+			if (flipper.IfOn(switch))
 			{
 				//do it;
 			}
@@ -113,7 +113,7 @@ In the preceding examples we satisfy dependencies using constructor injection. F
 
 Use the built in static class instead of providing an instance via the constructor.  But don't blame us when your code is hard to unit test.
 
-	Flipper.DoIfOn(new MyFeature(), () => 
+	Flipper.DoIfOn(new MyFeatureSwitch(), () => 
 	{
 		//do the feature
 	});
@@ -128,9 +128,9 @@ Code that implements features should be "closed for modification" after flipping
 
 ## Making Features
 
-In the usage examples we create features using the base classes `BooleanFeature` and `ListFeature<T>`.  There's `Feature<T>` too.  These are nice, but you don't have to use them.  It's easy to create features from scratch that do anything you can imagine.
+In the usage examples we create features using the base classes `BooleanFeatureSwitch` and `ListFeatureSwitch<T>`.  There's `FeatureSwitch<T>` too.  These are nice, but you don't have to use them.  It's easy to create features from scratch that do anything you can imagine.
 
-	public class CoinTossFeature : IFeature
+	public class CoinToss : IFeatureSwitch
 	{
 	    public bool IsOn(IFeatureSettingsProvider featureSettingsProvider)
 	    {
@@ -152,4 +152,4 @@ Create your own implementation of `IFeatureSettingsProvider`. For example, you m
 
 ## Missing Settings
 
-All of the built-in Feature classes use settings to flip features.  They treat a feature as `ON` if a setting is missing (by looking at the Missing property).  The reason is simple: features tend to move from `OFF` to permanently `ON`.  We don't want a bunch of old settings hanging around.  So when we're done flipping a feature, we can just remove the setting and leave the code alone.
+All of the built-in FeatureSwitch classes use settings to flip features.  They treat a feature as `ON` if a setting is missing (by looking at the Missing property).  The reason is simple: features tend to move from `OFF` to permanently `ON`.  We don't want a bunch of old settings hanging around.  So when we're done flipping a feature, we can just remove the setting and leave the code alone.

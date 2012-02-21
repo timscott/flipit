@@ -38,8 +38,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Features\BooleanFeature.cs" />
+    <Compile Include="Switches\BooleanFeatureSwitch.cs" />
     <Compile Include="FeatureFlipper.cs" />
+    <Compile Include="Switches\FeatureSwitch.cs" />
     <Compile Include="Settings\AppSettingsFeatureSettingsProvider.cs" />
     <Compile Include="Settings\FeatureListSetting.cs" />
     <Compile Include="Settings\FeatureSetting.cs" />
@@ -48,10 +49,9 @@
     <Compile Include="Flipper.cs" />
     <Compile Include="IFeatureFlipper.cs" />
     <Compile Include="Settings\IFeatureSettingsProvider.cs" />
-    <Compile Include="Features\IFeature.cs" />
+    <Compile Include="Switches\IFeatureSwitch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Features\Feature.cs" />
-    <Compile Include="Features\ListFeature.cs" />
+    <Compile Include="Switches\ListFeatureSwitch.cs" />
     <Compile Include="Settings\ThreadSafeCache.cs" />
     <Compile Include="Settings\ICache.cs" />
   </ItemGroup>

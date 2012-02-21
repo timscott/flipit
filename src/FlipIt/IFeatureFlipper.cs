@@ -1,5 +1,5 @@
 using System;
-using FlipIt.Features;
+using FlipIt.Switches;
 
 namespace FlipIt
 {
@@ -11,7 +11,7 @@ namespace FlipIt
         /// <typeparam name="T">The type of the feature.</typeparam>
         /// <param name="feature">The feature.</param>
         /// <returns>Whether the feature is OFF or ON.</returns>
-        bool IsOn<T>(T feature) where T : IFeature;
+        bool IsOn<T>(T feature) where T : IFeatureSwitch;
 
         /// <summary>
         /// Perform the specified action if the feature is On.
@@ -19,6 +19,6 @@ namespace FlipIt
         /// <typeparam name="T">The type of the feature.</typeparam>
         /// <param name="feature">The feature.</param>
         /// <param name="action">The action to perform if the feature is ON.</param>
-        void DoIfOn<T>(T feature, Action action) where T : IFeature;
+        void DoIfOn<T>(T feature, Action action) where T : IFeatureSwitch;
     }
 }
