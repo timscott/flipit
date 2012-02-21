@@ -13,7 +13,7 @@ PACKAGE_OUTPUT_LIB_PATH = "#{PACKAGE_OUTPUT_PATH}/lib/"
 TEST_REPORT_PATH =  "#{OUTPUT_PATH}/report"
 COMMON_ASSEMBY_INFO_FILE = "#{SOURCE_PATH}/CommonAssemblyInfo.cs"
 MSPEC_VERSION = "0.5.3.0"
-VERSION = "0.1.0.0"
+VERSION = "0.1.0.1"
 PACKAGE_PATH = "#{BASE_PATH}/package"
 NUSPEC_FILENAME = "#{PRODUCT_NAME}.nuspec"
 NUSPEC_PATH = "#{PACKAGE_PATH}/#{NUSPEC_FILENAME}"
@@ -36,6 +36,8 @@ task :output do
 	FileUtils.mkdir TESTS_OUTPUT_PATH
 	FileUtils.mkdir PACKAGE_OUTPUT_PATH
 	FileUtils.mkdir PACKAGE_OUTPUT_LIB_PATH
+	FileUtils.rmtree PACKAGE_PATH
+	FileUtils.mkdir PACKAGE_PATH
 	FileUtils.cp_r "#{TESTS_PATH}.", TESTS_OUTPUT_PATH
 	copy_files TESTS_PATH, PACKAGE_OUTPUT_LIB_PATH, PRODUCT_NAME, ["dll", "pdb", "xml"]
 end
@@ -77,10 +79,17 @@ end
 
 desc "Create the nuget package"
 task :create_package do
-    cmd = Exec.new
-    cmd.command = 'tools/nuget.exe'
-    cmd.parameters = "pack #{NUSPEC_PATH} -basepath #{PACKAGE_OUTPUT_PATH} -outputdirectory #{PACKAGE_PATH}"
-    cmd.execute
+	execute_nuget "pack #{NUSPEC_PATH} -basepath #{PACKAGE_OUTPUT_PATH} -outputdirectory #{PACKAGE_PATH}"\
+end
+
+desc "Publish to nuget"
+task :publish do
+	$stdout.sync = true
+	print "Are you sure? (Y/[N])? "
+	input = STDIN.gets.strip
+	if input.downcase == 'y'
+		execute_nuget "push #{PACKAGE_PATH}/#{PRODUCT_NAME}.#{VERSION}.nupkg"
+	end
 end
 
 def copy_files(from, to, filename, extensions)
@@ -92,4 +101,11 @@ def copy_files(from, to, filename, extensions)
 		FileUtils.cp from_name, to_name
 	end
   end
+end
+
+def execute_nuget(parameters)
+	cmd = Exec.new
+    cmd.command = "tools/nuget.exe"
+    cmd.parameters = parameters
+    cmd.execute
 end
